@@ -6,7 +6,7 @@
 #include<unistd.h>
 #include<fcntl.h>
 #include<string.h>
-
+#include<stdlib.h>
  
 int main(int argc,char *argv[])
 {
@@ -26,11 +26,13 @@ int main(int argc,char *argv[])
         fprintf(stdout,"File already exists, terminating");
 }
 
-
-fd = creat(argv[1],0640); // Reference man 2 creat
+if (argc > 2){
+int permset=(strtol(argv[2],NULL,8));
+fprintf(stdout,"permset is equal to: %i\n ", permset);
+fd = creat(argv[1],permset); // Reference man 2 creat
     if(fd == -1)
         perror("creat");
-
+}
 
 
     if (close(fd) == -1)
